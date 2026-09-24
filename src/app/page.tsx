@@ -1,69 +1,119 @@
-import Image from "next/image";
+"use client"
+import { selectCategories } from '@/actions/categories';
+import { selectDebt } from '@/actions/debt';
+import { selectTransactions } from '@/actions/transactions';
+import { selectWallet } from '@/actions/wallet';
+import { categoriesProps, debtProps, transactionsProps, userProps, walletProps } from '@/lib/type';
+import {useEffect, useState} from 'react';
+import { Trash2 } from 'lucide-react';
+import { selectUser } from '@/actions/user';
 
 export default function Home() {
+  const [dataC, setDataC] = useState<categoriesProps[]>([]);
+  const [dataT, setDataT] = useState<transactionsProps[]>([]);
+  const [dataD, setDataD] = useState<debtProps[]>([]);
+  const [dataW, setDataW] = useState<walletProps[]>([]);
+  const [user, setUser] = useState<userProps|null>(null);
+  useEffect(()=> {
+    const fetchData = async () => {
+      const resC = await selectCategories();
+      const resT = await selectTransactions();
+      const resD = await selectDebt();
+      const resW = await selectWallet();
+      const user = await selectUser();
+      if(!resC.ok || !resC.categories ) return resC.message;
+      if(!resT.ok || !resT.transactions ) return resT.message;
+      if(!resD.ok || !resD.debt ) return resD.message;
+      if(!resW.ok || !resW.wallet ) return resW.message;
+      if(!user.ok || !user.user ) return user.message;
+      setDataC(resC.categories);
+      setDataT(resT.transactions);
+      setDataD(resD.debt);
+      setDataW(resW.wallet);
+      setUser(user.user);
+    }
+
+    fetchData();
+  }, []);
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      <main className="min-h-screen w-full bg-gray-100 px-4 py-8">
+        <div className="mx-auto w-full max-w-[390px]">
+          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <h1 className="mb-6 text-2xl font-bold text-gray-900">
+              Homepage
+            </h1>
+
+            <div className="flex flex-col gap-6">
+              <section>
+                <h2  className="mb-3 border-b border-gray-200 pb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">Profile</h2>
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-700"><span className="font-medium text-gray-900">Nama:</span>{" "}{user?.name}</p>
+                  <p className="text-sm text-gray-700"><span className="font-medium text-gray-900">Email:</span>{" "}{user?.email}</p>
+                  <p className="text-sm text-gray-700"><span className="font-medium text-gray-900">Created:</span>{" "}{user?.created_at && new Date(user?.created_at).toLocaleString("id-ID")}</p>
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 border-b border-gray-200 pb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">Data Categories</h3>
+                <div className="space-y-1">
+                  {dataC.map(item => (
+                    <div key={item.id} className="rounded-lg bg-gray-50 px-3 py-2">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-medium text-gray-900">Nama:</span>{" "}{item.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 border-b border-gray-200 pb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">Data Transactions</h3>
+                <div className="space-y-1">
+                  {dataT.map(item => (
+                    <div key={item.id} className="rounded-lg bg-gray-50 px-3 py-2">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-medium text-gray-900">Nama:</span>{" "}{item.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 border-b border-gray-200 pb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">Data Debt</h3>
+                <div className="space-y-1">
+                  {dataD.map(item => (
+                    <div key={item.id} className="rounded-lg bg-gray-50 px-3 py-2">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-medium text-gray-900">Nama:</span>{" "}{item.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Wallet */}
+              <section>
+                <h3 className="mb-3 border-b border-gray-200 pb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">Data Wallet</h3>
+                <div className="space-y-2">
+                  {dataW.map(item => (
+                    <div key={item.id} className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2">
+                      <p className="text-sm text-gray-700">
+                        <span className="font-medium text-gray-900">Nama:</span>{" "}{item.name}
+                      </p>
+
+                      <Trash2 className="h-4 w-4 cursor-pointer text-gray-400 transition hover:text-red-500" />
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <section>
+                <a href="/login" className="rounded py-2 px-3 bg-blue-500 hover:bg-blue-600 focus:outline-2 focus:outline-offset-2 focus:outline-blue-300 active:bg-blue-700">Login</a>
+              </section>
+
+            </div>
+          </div>
         </div>
       </main>
-    </div>
   );
 }
