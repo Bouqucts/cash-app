@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { walletProps } from "@/lib/type";
+import { walletProps } from "@/lib/types";
 import { verifyToken } from "@/lib/jwt";
 import pool from "@/lib/db";
 
@@ -10,7 +10,7 @@ export const selectWallet = async () => {
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok: false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok: false, message: "Token tidak diketahui"};
+    if (!user) return {ok: false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -27,7 +27,7 @@ export const insertWallet = async (name: string, balance: number, type: boolean)
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok:false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok:false, message: "Token tidak diketahui"};
+    if (!user) return {ok:false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -44,7 +44,7 @@ export const updateWallet = async (name: string, balance: number, type: string, 
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok:false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok:false, message: "Token tidak diketahui"};
+    if (!user) return {ok:false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -58,9 +58,10 @@ export const updateWallet = async (name: string, balance: number, type: string, 
 
 export const deleteWallet = async (id: string) => {
     try {
-        if(!id) return {ok:false, message:"Can't find ID Wallet"};
-        await pool.query("DELETE wallet WHERE id=$1", [id]);
-        return {ok: true, message: "Success"};
+        if(!id) return {ok:false, message:"Can't find Wallet ID"};
+        const res = await pool.query("DELETE wallet WHERE id=$1", [id]);
+        if(res.rows.length === 0) return {ok:false, message: "Column Not Found"};
+        return {ok: true, message: "Success"}
     } catch (e) {
         return {ok: false, message: `SERVER ERROR: ${e instanceof Error ? e.message : e}`}
     }

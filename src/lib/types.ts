@@ -25,6 +25,14 @@ export interface transactionsProps {
     created_at: string,
 };
 
+export interface recurringExpensesProps {
+    id: string,
+    user_id: string,
+    name: string,
+    updated_at: string,
+    created_at: string,
+}
+
 export interface debtProps {
     id: string,
     user_id: string,

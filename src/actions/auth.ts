@@ -2,7 +2,7 @@
 import { hashPassword } from "@/lib/argon";
 import pool from "@/lib/db";
 import { signToken } from "@/lib/jwt";
-import { usersTypes } from "@/lib/type";
+import { usersTypes } from "@/lib/types";
 import { cookies } from "next/headers";
 import argon2 from 'argon2';
 
@@ -12,11 +12,11 @@ export const login = async (email:string, password: string) => {
         const res = await pool.query<usersTypes>("SELECT id, name, email, password, created_at, updated_at FROM users WHERE email=$1 LIMIT 1", [email]);
         if (res.rowCount === 0) return {ok: false, message: "NO ACCOUNT FOUND"};
         const user = res.rows[0];
-        const id = user.id
-        const name = user.name
-        const userEmail = user.email
-        const created_at = user.created_at
-        const updated_at = user.updated_at
+        const id = user.id;
+        const name = user.name;
+        const userEmail = user.email;
+        const created_at = user.created_at;
+        const updated_at = user.updated_at;
         const valid = await argon2.verify(user.password, password);
         if (userEmail !== email || !valid) return {ok:false, message: "Invalid email or password"};
         const payload = { id, name, email: userEmail, created_at, updated_at};

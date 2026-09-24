@@ -1,7 +1,7 @@
 "use client";
 
 import { selectTransactions } from "@/actions/transactions";
-import { transactionsProps } from "@/lib/type";
+import { transactionsProps } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 

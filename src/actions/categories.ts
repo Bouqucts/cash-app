@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { categoriesProps } from "@/lib/type";
+import { categoriesProps } from "@/lib/types";
 import { verifyToken } from "@/lib/jwt";
 import pool from "@/lib/db";
 
@@ -11,7 +11,7 @@ export const selectCategories = async () => {
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok:false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok:false, message: "Token tidak diketahui"};
+    if (!user) return {ok:false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -28,7 +28,7 @@ export const insertCategories = async (name: string) => {
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok:false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok:false, message: "Token tidak diketahui"};
+    if (!user) return {ok:false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -44,7 +44,7 @@ export const updateCategories = async (name: string) => {
     const token = cookieStore.get("session")?.value;
     if (!token) return {ok:false, message: "Unauthorized"};
     const user = verifyToken(token);
-    if (!user) return {ok:false, message: "Token tidak diketahui"};
+    if (!user) return {ok:false, message: "Unknown Token"};
     const userId = user.id;
 
     try {
@@ -57,7 +57,7 @@ export const updateCategories = async (name: string) => {
 
 export const deleteCategories = async (id: string) => {
     try {
-        if (!id) return {ok:false, message: "categories not found"};
+        if (!id) return {ok:false, message: "Can't find categories ID"};
         await pool.query("DELETE FROM categories WHERE id=$1", [id]);
         return {ok: true, message: "Success"}
     } catch (e) {
