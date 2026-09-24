@@ -1,30 +1,34 @@
 "use client"
 
-import { getUsers } from "@/actions/auth";
-import { usersTypes } from "@/lib/type";
-import { useEffect, useState } from "react"
+import { FormEvent, useState } from "react";
+import { login } from "@/actions/auth";
 
 export default function Page() {
-    const [data, setData] = useState<usersTypes[]>([]);
-    useEffect(()=> {
-        const fetchData = async () => {
-            const res = await getUsers();
-            if (!res.ok || !res.users) {return}
-            setData(res.users);
-            console.log(res.users);
-        }
-        fetchData();
-    },[]);
+    const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            setLoading(true)
+            const res = await login(email, password);
+            if(!res.ok) return res.message;
+            console.log(res.message);
+        } finally {
+            setEmail("");
+            setPassword("");
+            setLoading(false);
+        }
+    }
 
     return (
         <div>
-            {data.map(item => (
-                <div key={item.id}>
-                    <p>Nama: {item.name}</p>
-                    <p>Email: {item.email}</p>
-                </div>
-            ))}
+            <form onSubmit={handleSubmit}>
+                <input type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} value={email}/>
+                <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} value={password}/>
+                <button type="submit">{loading ? "Loading..." : "Submit" }</button>
+            </form>
         </div>
     )
 }
