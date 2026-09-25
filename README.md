@@ -1,5 +1,8 @@
 ### Getting Started
-- pnpm run dev
+`pnpm run dev`
+
+### Migrate middleware to proxy
+`npx @next/codemod@canary middleware-to-proxy .` or `pnpm @next/codemod@canary middleware-to-proxy .`
 
 ### Dependency
 - argon2 as argon2id
@@ -16,4 +19,4 @@
 - Settings [/settings](https://cash-app-rho.vercel.app/dashboard)
 
 ### Deploy on Vercel
-- [Link Website](https://cash-app-rho.vercel.app)
+[Link Website](https://cash-app-rho.vercel.app)

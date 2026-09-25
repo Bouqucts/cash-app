@@ -10,13 +10,13 @@ import { selectUser } from '@/actions/user';
 import { selectRecurringExpenses } from '@/actions/recurringExpenses';
 
 export default function Home() {
-  const [loading, setLoading] = useState(false)
-  const [dataC, setDataC] = useState<categoriesProps[]>([]);
-  const [dataD, setDataD] = useState<debtProps[]>([]);
-  const [dataRE, setDataRE] = useState<recurringExpensesProps[]>([]);
-  const [dataT, setDataT] = useState<transactionsProps[]>([]);
-  const [dataW, setDataW] = useState<walletProps[]>([]);
-  const [user, setUser] = useState<userProps|null>(null);
+  const [loading, setLoading] = useState(false); // Loading boolean
+  const [dataC, setDataC] = useState<categoriesProps[]>([]); // Data  Kategori
+  const [dataD, setDataD] = useState<debtProps[]>([]); // Data Debt
+  const [dataRE, setDataRE] = useState<recurringExpensesProps[]>([]); // Data RecurringExpenses
+  const [dataT, setDataT] = useState<transactionsProps[]>([]); // Data Transactions
+  const [dataW, setDataW] = useState<walletProps[]>([]); // Data Wallet
+  const [user, setUser] = useState<userProps|null>(null); // Data User
   useEffect(()=> {
     const fetchData = async () => {
       const resC = await selectCategories();
@@ -28,7 +28,7 @@ export default function Home() {
       if(!resC.ok || !resC.categories ) return resC.message;
       if(!resD.ok || !resD.debt ) return resD.message;
       if(!resRE.ok || !resRE.recurringExpenses ) return resRE.message;
-      if(!resT.ok || !resT.transactions ) return resT.message;
+      if(!resT.ok || !resT.transactions ) return resT.message;  
       if(!resW.ok || !resW.wallet ) return resW.message;
       if(!user.ok || !user.user ) return user.message;
       setDataC(resC.categories);
