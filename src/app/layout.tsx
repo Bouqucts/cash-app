@@ -12,7 +12,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={"h-full antialiased"}
     >
-      <body className="font-poppins min-h-full flex flex-col">{children}</body>
+      <body className="font-poppins min-h-full flex flex-col items-center w-auto">{children}</body>
     </html>
   );
-}
+};

@@ -2,4 +2,12 @@
 @theme {
     --font-sonder: "Sonder-Regular";
     --font-poppins: "Poppins-Black","Poppins-BlackItalic","Poppins-Bold","Poppins-BoldItalic","Poppins-Black","Poppins-Light","Poppins-LightItalic","Poppins-LightBold",;
+    --color-primary: #FFFFFF;
+    --color-secondary: #1783C1;
+    --color-dark-blue: #0A3C6E;
+    --color-black: #333333;
+}
+
+h1 {
+    font-size: 2rem;
 }

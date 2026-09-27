@@ -39,3 +39,13 @@ export const register = async (name:string, email: string, password: string) => 
         return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : e}
     }
 }
+
+export const logout = async () => {
+    try {
+        const cookieStore = await cookies();
+        cookieStore.delete("session");
+        return {ok: true, message: "logged out"}
+    }  catch (e) {
+        return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : e}
+    }
+}

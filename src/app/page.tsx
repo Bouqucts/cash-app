@@ -43,7 +43,7 @@ export default function Home() {
   }, []);
   return (
       <main className="min-h-screen w-full bg-gray-100 px-4 py-8">
-        <div className="mx-auto w-full max-w-[390px]">
+        <div className="mx-auto w-auto max-w-[390px]">
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <h1 className="font-sonder mb-6 text-4xl font-bold text-gray-900">
               Artos
