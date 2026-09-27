@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Aclonica } from "next/font/google";
+
+const aclonica = Aclonica({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-aclonica",
+});
 
 export const metadata: Metadata = {
   title: "Artos",
@@ -12,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={"h-full antialiased"}
     >
-      <body className="font-poppins min-h-full flex flex-col items-center w-auto">{children}</body>
+      <body className={`${aclonica.variable} font-poppins min-h-full flex flex-col items-center w-auto`}>{children}</body>
     </html>
   );
 };

@@ -1,7 +1,8 @@
 "use client";
 
-import { register } from "@/actions/auth";
 import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { register } from "@/actions/auth";
 
 export default function RegisterForm() {
     const [name, setName] = useState("");
@@ -25,7 +26,7 @@ export default function RegisterForm() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col w-full max-w-[390px]">
+        <div className="w-full min-h-screen flex flex-col w-full max-w-[425px]">
             <p className="font-sonder text-[#1783c1] text-[3rem] px-8 py-8">Artos</p>
             <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-3 justify-center items-center bg-[#1783c1] rounded-t-[2rem] px-8 py-16">
                 <p className="text-white text-[2rem] mb-4">Sign Up</p>
@@ -65,7 +66,17 @@ export default function RegisterForm() {
                     value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                 />
-                <button type="submit" className="mt-auto bg-white w-[350] px-6 py-3 rounded-full">{loading ? "Loading..." : "Login"}</button>
+                <p className="text-center text-white">
+                    Already have an account?{" "}
+                    <Link
+                        href="/signin"
+                        className="hover:underline"
+                    >
+                        signin here
+                    </Link>
+                </p>
+
+                <button type="submit" className="mt-auto bg-white w-[350] cursor-pointer px-6 py-3 rounded-full">{loading ? "Loading..." : "Sign Up"}</button>
             </form>
         </div>
     );

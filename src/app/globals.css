@@ -2,6 +2,7 @@
 @theme {
     --font-sonder: "Sonder-Regular", sans-serif;
     --font-poppins: "Poppins-Black","Poppins-BlackItalic","Poppins-Bold","Poppins-BoldItalic","Poppins-Black","Poppins-Light","Poppins-LightItalic","Poppins-LightBold",;
+    --font-aclonica: var(--font-aclonica);
     --color-primary: #FFFFFF;
     --color-secondary: #1783C1;
     --color-dark-blue: #0A3C6E;
