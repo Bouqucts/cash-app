@@ -9,3 +9,7 @@ self.addEventListener("install", () => {
 self.addEventListener("activate", () => {
     self.clients.claim();
 });
+
+self.addEventListener("beforeinstallprompt", (e) => {
+    console.log("🔥 PWA INSTALLABLE");
+});

@@ -7,6 +7,7 @@ import Transactions from "@/components/Transactions";
 import Debt from "@/components/Debt";
 import History from "@/components/History";
 import Setting from "@/components/Settings";
+import InstallPWA from "@/components/InstallPWA";
 
 export default function Home() {
   const [navigation, setNavigation] = useState<"1" | "2" | "3" | "4" | "5">("1");
@@ -47,6 +48,7 @@ export default function Home() {
       </nav>
       <main className="min-h-dvh w-full min-w-[330px] max-w-[425px]">
         {render()}
+        <InstallPWA />
       </main>
     </>
   );
