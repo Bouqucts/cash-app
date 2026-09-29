@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Aclonica, Poppins } from "next/font/google";
 import "./globals.css";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
-import PWAInstallDebug from "@/components/PWAInstallDebug";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -43,7 +42,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={"h-full antialiased"}
     >
       <body className={`${aclonica.variable} ${poppins.variable} min-h-full flex flex-col items-center`}>
-        <PWAInstallDebug />
         <ServiceWorkerRegistration />
         {children}
       </body>
