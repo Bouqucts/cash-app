@@ -10,17 +10,17 @@ export default function Settings() {
     const [dataD, setDataD] = useState<debtProps[]>([]);
 
     useEffect(()=>{
-        try {
-            setLoading(true);
-            const fetchData = async () => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
                 const res = await selectDebt();
                 if(!res.ok || !res.debt) return console.error(res.message);
                 setDataD(res.debt);
+            } finally {
+                setLoading(false);
             }
-            fetchData();
-        } finally {
-            setLoading(false);
         }
+        fetchData();
     },[]);
 
     return (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Aclonica, Poppins } from "next/font/google";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={"h-full antialiased"}
     >
-      <body className={`${aclonica.variable} ${poppins.variable} min-h-full flex flex-col items-center`}>{children}</body>
+      <body className={`${aclonica.variable} ${poppins.variable} min-h-full flex flex-col items-center`}>
+        <ServiceWorkerRegistration />
+        {children}
+      </body>
     </html>
   );
 };

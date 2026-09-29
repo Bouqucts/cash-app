@@ -10,18 +10,17 @@ export default function Transactions() {
     const [dataT, setDataT] = useState<transactionsProps[]>([]); // Data RecurringExpenses
 
     useEffect(()=> {
-        try {
-            setLoading(true);
-            const fetchData = async () => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
                 const resT = await selectTransactions();
                 if(!resT.ok || !resT.transactions ) return resT.message;
                 setDataT(resT.transactions);
+            } finally {
+                setLoading(false);
             }
-    
-            fetchData();
-        } finally {
-            setLoading(false);
         }
+        fetchData();
     }, []);
 
     return(
