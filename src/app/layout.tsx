@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Aclonica } from "next/font/google";
+import { Aclonica, Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100","200" ,"300","400", "500", "600", "700", "800", "900",],
+  variable: "--font-poppins",
+})
 
 const aclonica = Aclonica({
   subsets: ["latin"],
@@ -19,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={"h-full antialiased"}
     >
-      <body className={`${aclonica.variable} font-poppins min-h-full flex flex-col items-center`}>{children}</body>
+      <body className={`${aclonica.variable} ${poppins.variable} min-h-full flex flex-col items-center`}>{children}</body>
     </html>
   );
 };

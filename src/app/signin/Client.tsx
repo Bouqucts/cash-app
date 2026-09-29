@@ -38,7 +38,7 @@ export default function SigninForm() {
                 <p className="self-start font-sonder text-[#1783c1] text-[3rem] px-8 py-8">Artos</p>
                 <div className="mt-auto mb-8 text-center text-[2.2rem]">
                     <p>
-                        Teu Gaduh{" "}
+                        STeu Gaduh{" "}
                         <span className="font-sonder text-[#1783c1]">
                             Artos
                         </span>

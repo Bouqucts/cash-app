@@ -9,26 +9,25 @@ export default function RecurringExpenses() {
     const [dataRE, setDataRE] = useState<recurringExpensesProps[]>([]); // Data RecurringExpenses
 
     useEffect(()=> {
-        try {
-            setLoading(true);
-            const fetchData = async () => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
                 const resRE = await selectRecurringExpenses();
                 if(!resRE.ok || !resRE.recurringExpenses ) return resRE.message;
                 setDataRE(resRE.recurringExpenses);
+            } finally {
+                setLoading(false);
             }
-    
-            fetchData();
-        } finally {
-            setLoading(false);
         }
+        fetchData();
     }, []);
 
     return(
-        <div className="min-h-screen w-full">
+        <div className="min-h-dvh w-full">
             <div className="flex flex-col gap-2 rounded-2xl bg-white p-5">
                 <p className="self-start font-sonder text-[#1783c1] text-[3rem] px-8 pt-4">Artos</p>
                 <section>
-                    <p>Contoh Halaman 1</p>
+                    <p>Contoh Halaman 2</p>
                 </section>
                 <section>
                     <div className="flex justify-between items-center bg-[#F0F2F2] rounded-2xl px-[1rem] py-[1rem]">
