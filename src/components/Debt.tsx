@@ -26,9 +26,6 @@ export default function Debt() {
         <div className="min-h-dvh w-full">
             <div className="flex flex-col gap-2 rounded-2xl bg-white p-5">
                 <p className="self-start font-sonder text-[#1783c1] text-[3rem] px-8 pt-4">Artos</p>
-                <section>
-                    <p>Contoh Halaman 3</p>
-                </section>
                 <div>
                     {dataD.map(items => (
                         <div key={items.id}>

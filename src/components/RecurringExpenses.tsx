@@ -27,9 +27,6 @@ export default function RecurringExpenses() {
             <div className="flex flex-col gap-2 rounded-2xl bg-white p-5">
                 <p className="self-start font-sonder text-[#1783c1] text-[3rem] px-8 pt-4">Artos</p>
                 <section>
-                    <p>Contoh Halaman 2</p>
-                </section>
-                <section>
                     <div className="flex justify-between items-center bg-[#F0F2F2] rounded-2xl px-[1rem] py-[1rem]">
                         <div>
                         <p className="text-[2rem]">NT$ 2.000</p>
