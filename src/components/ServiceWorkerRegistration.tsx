@@ -13,12 +13,12 @@ export default function ServiceWorkerRegistration() {
                         registration.scope
                     );
                 })
-            .catch((error) => {
-                console.error(
-                    "Service Worker registration failed:",
-                    error
-                );
-            });
+                .catch((error) => {
+                    console.error(
+                        "Service Worker registration failed:",
+                        error
+                    );
+                });
         }
     }, []);
 
