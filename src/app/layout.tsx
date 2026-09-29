@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={"h-full antialiased"}
     >
-      <body className={`${aclonica.variable} font-poppins min-h-full flex flex-col items-center w-auto`}>{children}</body>
+      <body className={`${aclonica.variable} font-poppins min-h-full flex flex-col items-center`}>{children}</body>
     </html>
   );
 };

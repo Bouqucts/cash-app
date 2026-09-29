@@ -18,7 +18,7 @@ export default function Page() {
     }, []);
     return (
         <div>
-            <h1>Transactions Page</h1>
+            <p className="self-start font-sonder text-[#1783c1] text-[3rem] px-8 py-8">Artos</p>
             {data.map((item) => (
                 <div key={item.id}>
                     <h3>{item.name}</h3>
