@@ -27,7 +27,7 @@ export const login = async (email:string, password: string) => {
         cookieStore.set("session", token);
         return {ok:true, message: "Success",users:res.rows}
     } catch (e) {
-        return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : e}
+        return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : String(e)}
     }
 }
 
@@ -38,7 +38,7 @@ export const register = async (name:string, email: string, password: string) => 
         await pool.query<usersTypes>("INSERT INTO users (name, email, password) VALUES ($1, $2, $3)", [name, email, hash]);
         return {ok: true, message: "Success"}
     }  catch (e) {
-        return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : e}
+        return {ok: false, message: e instanceof Error ? `ERROR: ${e.message}` : String(e)}
     }
 }
 

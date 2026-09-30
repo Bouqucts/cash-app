@@ -14,8 +14,9 @@ export const selectTransactions = async () => {
     const userId = user.id;
 
     try {
-        const res = await pool.query<transactionsProps>("SELECT t.* FROM transactions t INNER JOIN categories c ON t.category_id =c.id WHERE c.user_id=$1", [userId]);
+        const res = await pool.query<transactionsProps>("SELECT t.* FROM transactions t INNER JOIN categories c ON t.category_id = c.id WHERE c.user_id=$1", [userId]);
         if (res.rows.length === 0) return {ok: false, message: "Transaction not found"};
+
         return {ok:true, message: "Success", transactions: res.rows}
     } catch (e) {
         return {ok: false, message: `SERVER ERROR: ${e instanceof Error ? e.message : e}`}
