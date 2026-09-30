@@ -1,22 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { login } from "@/actions/auth";
 import { ArrowUpIcon } from "lucide-react";
 
-interface BeforeInstallPromptEvent extends Event {
-    readonly platforms: string[];
-    readonly userChoice: Promise<{
-        outcome: "accepted" | "dismissed";
-        platform: string;
-    }>;
-    prompt(): Promise<void>;
-}
-
 export default function SigninForm() {
-    const [installPrompt, setInstallPrompt] =
-        useState<BeforeInstallPromptEvent | null>(null);
     const [face, setFace] = useState<"quote" | "login">("quote");
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
@@ -41,44 +30,6 @@ export default function SigninForm() {
             setPassword("");
             setLoading(false);
         }
-    };
-
-    useEffect(() => {
-        const handleBeforeInstallPrompt = (event: Event) => {
-            const installEvent = event as BeforeInstallPromptEvent;
-
-            console.log("🔥 PWA INSTALLABLE", installEvent);
-
-            event.preventDefault();
-
-            setInstallPrompt(installEvent);
-        };
-
-        window.addEventListener(
-            "beforeinstallprompt",
-            handleBeforeInstallPrompt
-        );
-
-        return () => {
-            window.removeEventListener(
-                "beforeinstallprompt",
-                handleBeforeInstallPrompt
-            );
-        };
-    }, []);
-
-    if (!installPrompt) {
-        return null;
-    }
-
-    const handleInstall = async () => {
-        await installPrompt.prompt();
-
-        const result = await installPrompt.userChoice;
-
-        console.log("Install result:", result);
-
-        setInstallPrompt(null);
     };
 
     return (
@@ -107,7 +58,7 @@ export default function SigninForm() {
                     onClick={() => setFace("login")}
                     className="mt-auto mb-8 flex w-[90%] cursor-pointer justify-center rounded-full bg-[#1783C1] py-4 text-white "
                 >
-                    <ArrowUpIcon onClick={handleInstall}/>
+                    <ArrowUpIcon/>
                 </button>
             </div>
 
